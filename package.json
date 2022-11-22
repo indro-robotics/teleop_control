@@ -4,7 +4,7 @@
   "description": "Control for InDro Robotics Commander Enabled Robots",
   "publisher": "InDro Robotics",
   "homepage": "",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "license": "UNLICENSED",
   "main": "./dist/extension.js",
   "keywords": [],
