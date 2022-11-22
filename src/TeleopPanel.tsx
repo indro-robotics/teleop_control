@@ -8,7 +8,7 @@ var controller_status = "Err. No Xbox controller found";
 
 var currentTopic = "mux/cmd_vel_rocos"
 var ptzTopic = "ptz/continuous_move"
-
+var count = 0;
 var message = {
   linear: {
     x: 0,
@@ -119,6 +119,32 @@ function TeleopPanel({ context }: { context: PanelExtensionContext }): JSX.Eleme
       context.publish?.(currentTopic, message);
       context.publish?.(ptzTopic, ptzMessage);
     }
+    count++;
+    if (ptzMessage.left_trigger.data == 1 && count > 100) {
+      ptzMessage.left_trigger.data = 0;
+      count = 0;
+    } else if (ptzMessage.right_trigger.data == 1 && count > 100) {
+      ptzMessage.right_trigger.data = 0;
+      count = 0;
+    } else if (ptzMessage.up.data == 1 && count > 100) {
+      ptzMessage.up.data = 0;
+      count = 0;
+    } else if (ptzMessage.left.data == 1 && count > 100) {
+      ptzMessage.left.data = 0;
+      count = 0;
+    } else if (ptzMessage.right.data == 1 && count > 100) {
+      ptzMessage.right.data = 0;
+      count = 0;
+    } else if (ptzMessage.back.data == 1 && count > 100) {
+      ptzMessage.back.data = 0;
+      count = 0;
+    } else if (ptzMessage.home.data == 1 && count > 100) {
+      ptzMessage.home.data = 0;
+      count = 0;
+    } else if (ptzMessage.wiper.data == 1 && count > 100) {
+      ptzMessage.wiper.data = 0;
+      count = 0;
+    }
 
     renderDone?.();
   }, [renderDone]);
@@ -139,6 +165,15 @@ function TeleopPanel({ context }: { context: PanelExtensionContext }): JSX.Eleme
             onConnect={connectHandler}
             onDisconnect={disconnectHandler}
             onAxisChange={axisChangeHandler}
+            onLT={() => {ptzMessage.left_trigger.data}}
+            onRT={() => {ptzMessage.right_trigger.data}}
+            onUp={() => {ptzMessage.up.data = 1}}
+            onLeft={() => {ptzMessage.left.data = 1}}
+            onRight={() => {ptzMessage.right.data = 1}}
+            onBack={() => {ptzMessage.back.data = 1}}
+            onY={() => {ptzMessage.home.data = 1}}
+            onB={() => {ptzMessage.wiper.data = 1}}
+
           >
             <main>
               <p></p>
