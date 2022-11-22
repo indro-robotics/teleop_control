@@ -1,6 +1,6 @@
 import { ExtensionContext } from "@foxglove/studio";
-import { initExamplePanel } from "./ExamplePanel";
+import { initTeleopPanel } from "./TeleopPanel";
 
 export function activate(extensionContext: ExtensionContext): void {
-  extensionContext.registerPanel({ name: "teleOP_Control", initPanel: initExamplePanel });
+  extensionContext.registerPanel({ name: "teleOP_Control", initPanel: initTeleopPanel });
 }
